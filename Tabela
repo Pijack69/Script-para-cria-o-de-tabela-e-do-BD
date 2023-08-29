@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+
+// Estrutura para armazenar informações sobre uma pessoa
+struct Pessoa {
+    char nome[50];
+    int quantidadeTickets;
+};
+
+// Função para adicionar tickets para uma pessoa
+void adicionarTickets(struct Pessoa pessoas[], int numPessoas) {
+    char nome[50];
+    int quantidade;
+
+    printf("Digite o nome da pessoa: ");
+    scanf("%s", nome);
+
+    for (int i = 0; i < numPessoas; i++) {
+        if (strcmp(nome, pessoas[i].nome) == 0) {
+            printf("Digite a quantidade de tickets a adicionar: ");
+            scanf("%d", &quantidade);
+            pessoas[i].quantidadeTickets += quantidade;
+            printf("%d tickets adicionados para %s.\n", quantidade, nome);
+            return;
+        }
+    }
+
+    printf("Pessoa não encontrada.\n");
+}
+
+// Função para exibir os tickets totais e por pessoa
+void exibirTickets(struct Pessoa pessoas[], int numPessoas) {
+    printf("Tickets entregues:\n");
+
+    for (int i = 0; i < numPessoas; i++) {
+        printf("%s: %d tickets\n", pessoas[i].nome, pessoas[i].quantidadeTickets);
+    }
+}
+
+int main() {
+    int numPessoas;
+    printf("Digite o número de pessoas: ");
+    scanf("%d", &numPessoas);
+
+    struct Pessoa pessoas[numPessoas];
+
+    // Inicializar as pessoas
+    for (int i = 0; i < numPessoas; i++) {
+        printf("Digite o nome da pessoa %d: ", i + 1);
+        scanf("%s", pessoas[i].nome);
+        pessoas[i].quantidadeTickets = 0;
+    }
+
+    int opcao;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Adicionar tickets para uma pessoa\n");
+        printf("2. Exibir tickets entregues\n");
+        printf("3. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                adicionarTickets(pessoas, numPessoas);
+                break;
+            case 2:
+                exibirTickets(pessoas, numPessoas);
+                break;
+            case 3:
+                printf("Encerrando a aplicação.\n");
+                break;
+            default:
+                printf("Opção inválida.\n");
+        }
+    } while (opcao != 3);
+
+    return 0;
+}
